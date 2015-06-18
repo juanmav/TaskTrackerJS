@@ -1,0 +1,35 @@
+{
+  "name": "tictactoe",
+  "version": "1.0.0",
+  "description": "Tic Tac Toe Game for TDD learning",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "keywords": [
+    "tictactoe",
+    "tdd",
+    "learning",
+    "unit-test"
+  ],
+  "author": "Juan Manuel Vicente",
+  "license": "BSD",
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-cli": "*",
+    "grunt-connect-proxy": "0.1.10",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-connect": "^0.9.0",
+    "grunt-contrib-jshint": "*",
+    "grunt-contrib-qunit": "*",
+    "grunt-contrib-uglify": "^0.8.0",
+    "grunt-serve": "^0.1.6",
+    "grunt-strip": "*",
+    "jshint": "*",
+    "jasmine": "2.3.1"
+  },
+  "dependencies": {
+    "orm.js": "^0.5.6",
+    "persistencejs": "^0.3.0"
+  }
+}
