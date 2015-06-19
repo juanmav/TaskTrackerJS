@@ -1,41 +1,41 @@
-function TaskTracker(){
+function TaskTrackerModel(){
     persistence.store.websql.config(persistence, 'MyDB10', 'description', 5 * 1024 * 1024);
     persistence.debug  = false;
     persistence.schemaSync();
 
     console.info('--------- SMTaskTracker ---------');
     console.info(' Para generar una nueva tarea en curso:');
-    console.info(' SMTask.newTask(\'Nombre Tarea\')');
+    console.info(' TaskTracker.newTask(\'Nombre Tarea\')');
     console.info(' para finalizar una tarea se puede iniciar una nueva tarea o:');
-    console.info(' ejecutar: SMTask.endTask()');
+    console.info(' ejecutar: TaskTracker.endTask()');
     console.info(' Para saber que tarea esta activa:');
-    console.info(' SMTask.getActiveTask()');
+    console.info(' TaskTracker.getActiveTask()');
     console.info(' Para saber el reporte de tareas: ');
-    console.info(' SMTask.report()');
-    console.info(' de una fecha puntual SMTask.report(\'25.12.2015\')');
+    console.info(' TaskTracker.report()');
+    console.info(' de una fecha puntual TaskTracker.report(\'25.12.2015\')');
 }
 
-TaskTracker.START = true;
-TaskTracker.END = false;
+TaskTrackerModel.START = true;
+TaskTrackerModel.END = false;
 
-TaskTracker.Task = persistence.define('Task', {
+TaskTrackerModel.Task = persistence.define('Task', {
     name: "TEXT",
     date : "DATE",
     action: "BOOL"
 });
 
-TaskTracker.Task.prototype.save = function(){
+TaskTrackerModel.Task.prototype.save = function(){
     persistence.add(this);
     persistence.flush();
 };
 
-TaskTracker.prototype.newTask = function(title){
+TaskTrackerModel.prototype.newTask = function(title){
     this.endTask();
     // TODO FIX this with Promises or callbacks
     // http://nodejsreactions.tumblr.com/post/74184070281/throwing-a-few-settimeouts-at-the-problem
     // El timeout es asi el endTask Termina de persistir los cambios.
     setTimeout(function(){
-        var task = new TaskTracker.Task();
+        var task = new TaskTrackerModel.Task();
         task.name = title;
         task.date = new Date();
         task.action = true;
@@ -43,15 +43,15 @@ TaskTracker.prototype.newTask = function(title){
     }, 1000);
 };
 
-TaskTracker.prototype.endTask = function(){
-    TaskTracker.Task.all().order("date", false).limit(1).list(
+TaskTrackerModel.prototype.endTask = function(){
+    TaskTrackerModel.Task.all().order("date", false).limit(1).list(
         // Tomo la ultima Tarea
         function(results){
-            if (results[0] && results[0].action == TaskTracker.START){
-                var taskend = new TaskTracker.Task();
+            if (results[0] && results[0].action == TaskTrackerModel.START){
+                var taskend = new TaskTrackerModel.Task();
                 taskend.name = results[0].name;
                 taskend.date = new Date();
-                taskend.action = TaskTracker.END;
+                taskend.action = TaskTrackerModel.END;
 
                 taskend.save();
                 console.log('Tarea Finalizada')
@@ -62,11 +62,11 @@ TaskTracker.prototype.endTask = function(){
     );
 };
 
-TaskTracker.prototype.getActiveTask = function(){
-    TaskTracker.Task.all().order("date", false).limit(1).list(
+TaskTrackerModel.prototype.getActiveTask = function(){
+    TaskTrackerModel.Task.all().order("date", false).limit(1).list(
         // Tomo la ultima Tarea Activa.
         function(results){
-            if (results[0] && results[0].action == TaskTracker.START){
+            if (results[0] && results[0].action == TaskTrackerModel.START){
                 console.log('Tarea Activa: ' + results[0].name);
             } else {
                 console.log('No hay tarea en curso');
@@ -75,14 +75,14 @@ TaskTracker.prototype.getActiveTask = function(){
     );
 };
 
-TaskTracker.prototype.report = function(date){
+TaskTrackerModel.prototype.report = function(date){
     if (date){
         console.log('Reporte de la fecha: ' + new Date(date.replace(/(\d+)\.(\d+)\.(\d+)/,"$2/$1/$3")));
     } else {
         var from = new Date(new Date().setHours(0,0,0,0));
         var to = new Date(new Date().setHours(23,59,59,0));
 
-        TaskTracker.Task.all().filter('date', '>', from).filter('date', '<', to).order('name').order('date').list(function(results){
+        TaskTrackerModel.Task.all().filter('date', '>', from).filter('date', '<', to).order('name').order('date').list(function(results){
             console.log('Reporte de hoy');
 
             times = [];
@@ -113,4 +113,4 @@ TaskTracker.prototype.report = function(date){
     }
 };
 
-SMTask = new TaskTracker();
+TaskTracker = new TaskTrackerModel();

@@ -1,16 +1,16 @@
 {
-  "name": "tictactoe",
+  "name": "tasktrackerjs",
   "version": "1.0.0",
-  "description": "Tic Tac Toe Game for TDD learning",
+  "description": "TaskTrackerJs a console time tracker developed with Javascript",
   "main": "index.js",
   "scripts": {
     "test": "grunt test"
   },
   "keywords": [
-    "tictactoe",
-    "tdd",
-    "learning",
-    "unit-test"
+    "task",
+    "tracker",
+    "console",
+    "javascript"
   ],
   "author": "Juan Manuel Vicente",
   "license": "BSD",
@@ -29,7 +29,6 @@
     "jasmine": "2.3.1"
   },
   "dependencies": {
-    "orm.js": "^0.5.6",
     "persistencejs": "^0.3.0"
   }
 }
