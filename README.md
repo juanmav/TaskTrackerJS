@@ -1,34 +1,39 @@
-# TaskTrackerJs developed with TDD methodology
+# TaskTrackerJs a console time tracker developed with Javascript.
 
-## Comandos
+This time tracker is supposed to be used in the browser dev console. Helping to track yours daily tasks.
 
-### Para generar una nueva tarea en curso:
+Why to use it ? Because, in my case, my daily basis is to use some issue tracker like redmine, trac, mantis but the problem with this is you need to remember the issues numbers ( I have a very bad memory with random numbers) and sometimes you need a fast switch to another task. So you can just ´TaskTracker.newTask('a fast switch!!!')´ and in the end of the day a simple ´TaskTracker.report()´ and update the issues in your favorite issue tracker.
+## Commands
 
-(Si se inicia una nueva tarea se termina la que esta en curso)
+**To create a new Task.**
 
-```javascript
-SMTask.newTask(\'Nombre Tarea\')
-```
-
-### para finalizar una tarea:
+`If a task is already running this will be finished before start the new one, this is automatly.`
 
 ```javascript
-SMTask.endTask()
+TaskTracker.newTask(\'Nombre Tarea\')
 ```
-### Para saber que tarea esta activa:
+
+**To finish a task**
 
 ```javascript
-SMTask.getActiveTask()
+TaskTracker.endTask()
 ```
-
-### Para saber el reporte de tareas:
+**To know wich task is active.**
 
 ```javascript
-SMTask.report()
+TaskTracker.getActiveTask()
 ```
 
-### de una fecha puntual
+**To get the report of the day:**
 
 ```javascript
-SMTask.report(\'25.12.2015\')
+TaskTracker.report()
 ```
+
+**To get the report of a selected date:**
+
+```javascript
+TaskTracker.report(\'25.12.2015\')
+```
+
+`The date format is dd.MM.yyyy` (Yes day.month.year)
